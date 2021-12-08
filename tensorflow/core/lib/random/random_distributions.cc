@@ -18,10 +18,16 @@ limitations under the License.
 
 namespace tensorflow {
 namespace random {
+#ifndef _M_ARM64
+// for arm64 builds, this cause a duplicated symbol error
+// SkipFromGenerator is defined in 
+//    - shuffle_dataset_op.lo.lib(shuffle_dataset_op.obj)
+//    - philox.lo.lib(random_distributions.obj)
 template <>
 void SingleSampleAdapter<PhiloxRandom>::SkipFromGenerator(uint64 num_skips) {
   // Use the O(1) PhiloxRandom::Skip instead of the default O(N) impl.
   generator_->Skip(num_skips);
 }
+#endif
 }  // namespace random
 }  // namespace tensorflow

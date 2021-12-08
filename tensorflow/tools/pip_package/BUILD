@@ -214,7 +214,6 @@ filegroup(
         "@llvm-project//mlir:LICENSE.TXT",
         "@lmdb//:LICENSE",
         "@local_config_tensorrt//:LICENSE",
-        "@nasm//:LICENSE",
         "@nsync//:LICENSE",
         "@opt_einsum_archive//:LICENSE",
         "@pasta//:LICENSE",

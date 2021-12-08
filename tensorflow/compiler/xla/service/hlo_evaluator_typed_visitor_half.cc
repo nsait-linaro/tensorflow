@@ -18,5 +18,5 @@ limitations under the License.
 #include "tensorflow/compiler/xla/service/hlo_evaluator.h"
 
 namespace xla {
-template class HloEvaluatorTypedVisitor<Eigen::half, float>;
+ template class HloEvaluatorTypedVisitor<Eigen::half, float>;
 }  // namespace xla

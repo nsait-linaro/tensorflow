@@ -102,21 +102,21 @@ PYBIND11_MODULE(_pywrap_server_lib, m) {
       [](int64_t dataset_id, const std::string& address,
          const std::string& protocol) -> tensorflow::data::DataServiceMetadata {
         tensorflow::data::DataServiceMetadata metadata;
-        tensorflow::data::DataServiceDispatcherClient client(address, protocol);
-        int64_t deadline_micros = tensorflow::kint64max;
-        tensorflow::Status status;
-        Py_BEGIN_ALLOW_THREADS;
-        status = tensorflow::data::grpc_util::Retry(
-            [&]() {
-              return client.GetDataServiceMetadata(dataset_id, metadata);
-            },
-            /*description=*/
-            tensorflow::strings::StrCat(
-                "Get data service metadata for dataset ", dataset_id,
-                " from dispatcher at ", address),
-            deadline_micros);
-        Py_END_ALLOW_THREADS;
-        tensorflow::MaybeRaiseFromStatus(status);
+        // tensorflow::data::DataServiceDispatcherClient client(address, protocol);
+        // int64_t deadline_micros = tensorflow::kint64max;
+        // tensorflow::Status status;
+        // Py_BEGIN_ALLOW_THREADS;
+        // status = tensorflow::data::grpc_util::Retry(
+        //     [&]() {
+        //       // return client.GetDataServiceMetadata(dataset_id, metadata);
+        //     },
+        //     /*description=*/
+        //     tensorflow::strings::StrCat(
+        //         "Get data service metadata for dataset ", dataset_id,
+        //         " from dispatcher at ", address),
+        //     deadline_micros);
+        // Py_END_ALLOW_THREADS;
+        // tensorflow::MaybeRaiseFromStatus(status);
         return metadata;
       },
       py::return_value_policy::reference);

@@ -39,8 +39,8 @@ config_setting(
         "@platforms//os:windows",
     ],
     define_values = {
-        "build_with_mkl": "true",
-        "build_with_openmp": "true",
+        "build_with_mkl": "false",
+        "build_with_openmp": "false",
     },
     visibility = ["//visibility:public"],
 )

@@ -960,7 +960,7 @@ def tf_native_cc_binary(
                 "-lm",
             ],
             "//conditions:default": [
-                "-lpthread",
+                "-lpthread844",
                 "-lm",
             ],
         }) + linkopts + _rpath_linkopts(name) + lrt_if_needed(),
@@ -1000,7 +1000,7 @@ def tf_native_cc_shared_library(
                 "-lm",
             ],
             "//conditions:default": [
-                "-lpthread",
+                "-lpthread885",
                 "-lm",
             ],
         }) + linkopts + _rpath_user_link_flags(name) + lrt_if_needed(),
@@ -1350,7 +1350,7 @@ def tf_cc_test(
                 "-lm",
             ],
             "//conditions:default": [
-                "-lpthread",
+                "-lpthread1237",
                 "-lm",
             ],
         }) + linkopts + _rpath_linkopts(name),
@@ -1485,7 +1485,7 @@ def tf_gpu_only_cc_test(
         features = if_cuda(["-use_header_modules"]),
         data = data + tf_binary_dynamic_kernel_dsos(),
         deps = [":" + gpu_lib_name],
-        linkopts = if_not_windows(["-lpthread", "-lm"]) + linkopts + _rpath_linkopts(name),
+        linkopts = if_not_windows(["-lpthread1372", "-lm"]) + linkopts + _rpath_linkopts(name),
         linkstatic = linkstatic or select({
             # cc_tests with ".so"s in srcs incorrectly link on Darwin
             # unless linkstatic=1.
@@ -1567,7 +1567,7 @@ def tf_cc_test_mkl(
                 ],
                 clean_dep("//tensorflow:windows"): [],
                 "//conditions:default": [
-                    "-lpthread",
+                    "-lpthread1454",
                     "-lm",
                 ],
             }) + _rpath_linkopts(src_to_test_name(src)) + tf_openmp_lopts(),

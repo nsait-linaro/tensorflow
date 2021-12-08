@@ -1286,7 +1286,7 @@ cc_library(
         "//tensorflow:android": [],
         "//conditions:default": [
             "-ldl",
-            "-lpthread",
+            "-lpthread1285",
         ],
     }),
     deps = tf_additional_lib_deps() + [
@@ -1311,7 +1311,7 @@ cc_library(
         "//tensorflow:android": [],
         "//conditions:default": [
             "-ldl",
-            "-lpthread",
+            "-lpthread1310",
         ],
     }),
     visibility = ["//tensorflow/python:__subpackages__"],
