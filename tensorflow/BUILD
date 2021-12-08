@@ -256,7 +256,7 @@ config_setting(
 )
 
 config_setting(
-    name = "windows",
+    name = "windows_x86_64",
     # Internal builds query the target OS.
     flag_values = if_google(
         {"//tools/cpp:cc_target_os": "windows"},
@@ -269,6 +269,32 @@ config_setting(
     ),
     visibility = ["//visibility:public"],
 )
+
+config_setting(
+    name = "windows_arm64",
+    # Internal builds query the target OS.
+    flag_values = if_google(
+        {"//tools/cpp:cc_target_os": "windows"},
+        {},
+    ),
+    # OSS builds query the CPU type.
+    values = if_oss(
+        {"cpu": "x64_arm64_windows"},
+        {},
+    ),
+    visibility = ["//visibility:public"],
+)
+
+selects.config_setting_group(
+    name = "windows",
+    match_any = [
+        ":windows_x86_64",
+        ":windows_arm64",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+
 
 config_setting(
     name = "no_tensorflow_py_deps",

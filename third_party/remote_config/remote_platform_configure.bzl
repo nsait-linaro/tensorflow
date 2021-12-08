@@ -11,8 +11,10 @@ def _remote_platform_configure_impl(repository_ctx):
         else:
             platform = "linux"
 
-    cpu = "x86_64"
+    # TODO: Remove aarch64 as default. echo $MACHTYPE should return correct cpu
+    cpu = "aarch64"
     machine_type = repository_ctx.execute(["bash", "-c", "echo $MACHTYPE"]).stdout
+    print("****** Executing remote config: "+machine_type)
     if (machine_type.startswith("ppc") or
         machine_type.startswith("powerpc")):
         cpu = "ppc"

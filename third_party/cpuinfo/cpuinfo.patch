@@ -1,0 +1,77 @@
+From e41cfab72f30503b40d0a238bdee048f566001f2 Mon Sep 17 00:00:00 2001
+From: Niyas Sait <niyas.sait@linaro.org>
+Date: Tue, 25 Jan 2022 10:39:09 +0000
+Subject: [PATCH 1/1] add windows/arm64 platform
+
+---
+ src/arm/windows/init.c | 58 ++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
+ create mode 100644 src/arm/windows/init.c
+
+diff --git a/src/arm/windows/init.c b/src/arm/windows/init.c
+new file mode 100644
+index 0000000..c0b9867
+--- /dev/null
++++ b/src/arm/windows/init.c
+@@ -0,0 +1,58 @@
++#include <stdio.h>
++#include <stdint.h>
++#include <stdlib.h>
++#include <string.h>
++#include <malloc.h>
++
++#include <errno.h>
++#include <sys/types.h>
++// #include <sys/sysctl.h>
++// #include <mach/machine.h>
++
++#include <cpuinfo.h>
++#include <cpuinfo/internal-api.h>
++#include <cpuinfo/log.h>
++
++/* Polyfill recent CPUFAMILY_ARM_* values for older SDKs */
++#ifndef CPUFAMILY_ARM_MONSOON_MISTRAL
++	#define CPUFAMILY_ARM_MONSOON_MISTRAL   0xE81E7EF6
++#endif
++#ifndef CPUFAMILY_ARM_VORTEX_TEMPEST
++	#define CPUFAMILY_ARM_VORTEX_TEMPEST    0x07D34B9F
++#endif
++#ifndef CPUFAMILY_ARM_LIGHTNING_THUNDER
++	#define CPUFAMILY_ARM_LIGHTNING_THUNDER 0x462504D2
++#endif
++#ifndef CPUFAMILY_ARM_FIRESTORM_ICESTORM
++	#define CPUFAMILY_ARM_FIRESTORM_ICESTORM 0x1B588BB3
++#endif
++
++struct cpuinfo_arm_isa cpuinfo_isa = {
++#if CPUINFO_ARCH_ARM
++	.thumb = true,
++	.thumb2 = true,
++	.thumbee = false,
++	.jazelle = false,
++	.armv5e = true,
++	.armv6 = true,
++	.armv6k = true,
++	.armv7 = true,
++	.vfpv2 = false,
++	.vfpv3 = true,
++	.d32 = true,
++	.wmmx = false,
++	.wmmx2 = false,
++	.neon = true,
++#endif
++#if CPUINFO_ARCH_ARM64
++	.aes = true,
++	.sha1 = true,
++	.sha2 = true,
++	.pmull = true,
++	.crc32 = true,
++#endif
++};
++
++void cpuinfo_arm_mach_init(void) {
++	return;
++}
+-- 
+2.34.1
+

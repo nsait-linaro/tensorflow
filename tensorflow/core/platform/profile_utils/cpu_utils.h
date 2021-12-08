@@ -60,7 +60,16 @@ class CpuUtils {
     return GetCpuUtilsHelperSingletonInstance().GetCurrentClockCycle();
 // ----------------------------------------------------------------
 #elif defined(_WIN32)
+#ifdef _M_ARM64
+    const int64_t pmccntr_el0 = (((3 & 1) << 14) |  // op0
+                          ((3 & 7) << 11) |  // op1
+                          ((9 & 15) << 7) |  // crn
+                          ((13 & 15) << 3) | // crm
+                          ((0 & 7) << 0));   // op2
+    return _ReadStatusReg (pmccntr_el0);
+#else
     return __rdtsc();
+#endif
 // ----------------------------------------------------------------
 #elif defined(__x86_64__) || defined(__amd64__)
     uint64_t high, low;

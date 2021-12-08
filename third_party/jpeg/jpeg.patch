@@ -1,0 +1,25 @@
+From e428d9c28f453f6dcd14141c69484e4127643255 Mon Sep 17 00:00:00 2001
+From: Niyas Sait <niyas.sait@linaro.org>
+Date: Mon, 24 Jan 2022 19:16:02 +0000
+Subject: [PATCH 1/1] workaround for win/arm64 build
+
+---
+ jmorecfg.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/jmorecfg.h b/jmorecfg.h
+index fb3a9cf4..f89694e1 100644
+--- a/jmorecfg.h
++++ b/jmorecfg.h
+@@ -141,7 +141,7 @@ typedef short INT16;
+ #ifndef _BASETSD_H_             /* Microsoft defines it in basetsd.h */
+ #ifndef _BASETSD_H              /* MinGW is slightly different */
+ #ifndef QGLOBAL_H               /* Qt defines it in qglobal.h */
+-typedef long INT32;
++// typedef long INT32;
+ #endif
+ #endif
+ #endif
+-- 
+2.34.1
+

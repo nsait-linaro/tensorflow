@@ -72,7 +72,6 @@ def _initialize_third_party():
     jpeg()
     kissfft()
     libprotobuf_mutator()
-    nasm()
     opencl_headers()
     pasta()
     psimd()
@@ -132,10 +131,12 @@ def _tf_repositories():
     #    curl -L <url> | sha256sum
     # and update the sha256 with the result.
 
+
     # LINT.IfChange
     tf_http_archive(
         name = "XNNPACK",
         sha256 = "3afae11087e3e1e31ebb9a9152b8fa9f410d49734fd942bbba3cfc02f4809cf4",
+        patch_file = ["//third_party/XNNPACK:xnnpack.patch"],
         strip_prefix = "XNNPACK-322055148b47dccb76bc03ad010f16c1e3a94817",
         urls = tf_mirror_urls("https://github.com/google/XNNPACK/archive/322055148b47dccb76bc03ad010f16c1e3a94817.zip"),
     )
@@ -150,6 +151,7 @@ def _tf_repositories():
 
     tf_http_archive(
         name = "pthreadpool",
+        patch_file = ["//third_party:pthreadpool.patch"],
         sha256 = "b96413b10dd8edaa4f6c0a60c6cf5ef55eebeef78164d5d69294c8173457f0ec",
         strip_prefix = "pthreadpool-b8374f80e42010941bda6c85b0e3f1a1bd77a1e0",
         urls = tf_mirror_urls("https://github.com/Maratyszcza/pthreadpool/archive/b8374f80e42010941bda6c85b0e3f1a1bd77a1e0.zip"),
@@ -458,7 +460,7 @@ def _tf_repositories():
 
     tf_http_archive(
         name = "nsync",
-        patch_file = ["//third_party:nsync.patch"],
+        patch_file = ["//third_party:nsync.patch", "//third_party:nsync_win_arm64.patch"],
         sha256 = "caf32e6b3d478b78cff6c2ba009c3400f8251f646804bcb65465666a9cea93c4",
         strip_prefix = "nsync-1.22.0",
         system_build_file = "//third_party/systemlibs:nsync.BUILD",

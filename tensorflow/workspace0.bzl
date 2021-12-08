@@ -103,7 +103,8 @@ def workspace():
         ],
     )
 
-    rules_cc_toolchains()
+    # windows arm64 toolchains are not yet present in bazelbuild/rules_cc
+    # rules_cc_toolchains()
 
     bazel_toolchains_repositories()
 

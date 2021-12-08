@@ -190,6 +190,9 @@ build:macos --copt=-DGRPC_BAZEL_BUILD
 # Settings for MacOS on ARM CPUs.
 build:macos_arm64 --cpu=darwin_arm64
 
+build:win_arm64 --cpu=x64_arm64_windows
+build:win_arm64 --compiler=clang-cl
+
 # iOS configs for each architecture and the fat binary builds.
 build:ios --apple_platform_type=ios
 build:ios --apple_bitcode=embedded --copt=-fembed-bitcode
@@ -347,8 +350,9 @@ build:windows --copt=/experimental:preprocessor
 build:windows --host_copt=/experimental:preprocessor
 
 # Misc build options we need for windows.
-build:windows --linkopt=/DEBUG
-build:windows --host_linkopt=/DEBUG
+# Disable /DEBUG for win/arm64 build as it generates > 4 Gb PDB files
+#build:windows --linkopt=/DEBUG
+#build:windows --host_linkopt=/DEBUG
 build:windows --linkopt=/OPT:REF
 build:windows --host_linkopt=/OPT:REF
 build:windows --linkopt=/OPT:ICF

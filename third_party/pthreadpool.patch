@@ -1,0 +1,53 @@
+From 91b14ad6550c73ec03dca6a924aa26d734607842 Mon Sep 17 00:00:00 2001
+From: Niyas Sait <niyas.sait@linaro.org>
+Date: Mon, 24 Jan 2022 15:01:32 +0000
+Subject: [PATCH 1/1] add woa
+
+---
+ BUILD.bazel | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/BUILD.bazel b/BUILD.bazel
+index f55a493..f9551a0 100644
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -46,12 +46,14 @@ cc_library(
+         ":watchos": INTERNAL_HDRS + GCD_IMPL_SRCS,
+         ":tvos": INTERNAL_HDRS + GCD_IMPL_SRCS,
+         ":windows_x86_64": INTERNAL_HDRS + WINDOWS_IMPL_SRCS,
++        ":windows_arm64": INTERNAL_HDRS + WINDOWS_IMPL_SRCS,
+         "//conditions:default": INTERNAL_HDRS + PTHREADS_IMPL_SRCS,
+     }) + select({
+         ":linux_x86_64": ARCH_SPECIFIC_SRCS,
+         ":android_x86": ARCH_SPECIFIC_SRCS,
+         ":android_x86_64": ARCH_SPECIFIC_SRCS,
+         ":windows_x86_64": ARCH_SPECIFIC_SRCS,
++        ":windows_arm64": ARCH_SPECIFIC_SRCS,
+         ":macos_x86": ARCH_SPECIFIC_SRCS,
+         ":macos_x86_64": ARCH_SPECIFIC_SRCS,
+         ":macos_arm64": ARCH_SPECIFIC_SRCS,
+@@ -107,6 +109,7 @@ cc_library(
+         ":android_x86": ["-DPTHREADPOOL_USE_FASTPATH=1"],
+         ":android_x86_64": ["-DPTHREADPOOL_USE_FASTPATH=1"],
+         ":windows_x86_64": ["-DPTHREADPOOL_USE_FASTPATH=1"],
++        ":windows_arm64": ["-DPTHREADPOOL_USE_FASTPATH=1"],
+         ":macos_x86": ["-DPTHREADPOOL_USE_FASTPATH=1"],
+         ":macos_x86_64": ["-DPTHREADPOOL_USE_FASTPATH=1"],
+         ":macos_arm64": ["-DPTHREADPOOL_USE_FASTPATH=1"],
+@@ -414,6 +417,13 @@ config_setting(
+     },
+ )
+ 
++config_setting(
++    name = "windows_arm64",
++    values = {
++        "cpu": "x64_arm64_windows",
++    },
++)
++
+ config_setting(
+     name = "emscripten",
+     values = {
+-- 
+2.34.1
+

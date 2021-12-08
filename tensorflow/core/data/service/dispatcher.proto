@@ -246,3 +246,4 @@ service DispatcherService {
   rpc GetDataServiceMetadata(GetDataServiceMetadataRequest)
       returns (GetDataServiceMetadataResponse);
 }
+

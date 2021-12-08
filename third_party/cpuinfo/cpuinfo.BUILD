@@ -55,6 +55,10 @@ MACH_SRCS = [
     "src/mach/topology.c",
 ]
 
+WIN_ARM64_SRCS = [
+    "src/arm/windows/init.c",
+]
+
 EMSCRIPTEN_SRCS = [
     "src/emscripten/init.c",
 ]
@@ -112,6 +116,7 @@ cc_library(
         ":macos_x86_64": COMMON_SRCS + X86_SRCS + MACH_SRCS + MACH_X86_SRCS,
         ":macos_arm64": COMMON_SRCS + MACH_SRCS + MACH_ARM_SRCS,
         ":windows_x86_64": COMMON_SRCS + X86_SRCS + WINDOWS_X86_SRCS,
+        ":windows_arm64": COMMON_SRCS + WIN_ARM64_SRCS,
         ":android_armv7": COMMON_SRCS + ARM_SRCS + LINUX_SRCS + LINUX_ARM32_SRCS + ANDROID_ARM_SRCS,
         ":android_arm64": COMMON_SRCS + ARM_SRCS + LINUX_SRCS + LINUX_ARM64_SRCS + ANDROID_ARM_SRCS,
         ":android_x86": COMMON_SRCS + X86_SRCS + LINUX_SRCS + LINUX_X86_SRCS,
@@ -131,6 +136,7 @@ cc_library(
     }),
     copts = select({
         ":windows_x86_64": [],
+        ":windows_arm64": [],
         "//conditions:default": C99OPTS,
     }) + [
         "-Iexternal/cpuinfo/include",
@@ -244,6 +250,12 @@ config_setting(
     name = "windows_x86_64",
     values = {"cpu": "x64_windows"},
 )
+
+config_setting(
+    name = "windows_arm64",
+    values = {"cpu": "x64_arm64_windows"},
+)
+
 
 config_setting(
     name = "android_armv7",

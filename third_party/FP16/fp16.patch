@@ -1,0 +1,52 @@
+From cfd3d9b2d999bfc625ffcf8cdd1cd973036da35e Mon Sep 17 00:00:00 2001
+From: Niyas Sait <niyas.sait@linaro.org>
+Date: Mon, 24 Jan 2022 15:15:45 +0000
+Subject: [PATCH 1/1] fix clang error on win/arm64
+
+---
+ include/fp16/bitcasts.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/include/fp16/bitcasts.h b/include/fp16/bitcasts.h
+index 86a4e22..12101b4 100644
+--- a/include/fp16/bitcasts.h
++++ b/include/fp16/bitcasts.h
+@@ -24,7 +24,7 @@ static inline float fp32_from_bits(uint32_t w) {
+ 	return __uint_as_float((unsigned int) w);
+ #elif defined(__INTEL_COMPILER)
+ 	return _castu32_f32(w);
+-#elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64))
++#elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64)) && !defined(__clang__)
+ 	return _CopyFloatFromInt32((__int32) w);
+ #else
+ 	union {
+@@ -42,7 +42,7 @@ static inline uint32_t fp32_to_bits(float f) {
+ 	return (uint32_t) __float_as_uint(f);
+ #elif defined(__INTEL_COMPILER)
+ 	return _castf32_u32(f);
+-#elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64))
++#elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64)) && !defined(__clang__)
+ 	return (uint32_t) _CopyInt32FromFloat(f);
+ #else
+ 	union {
+@@ -60,7 +60,7 @@ static inline double fp64_from_bits(uint64_t w) {
+ 	return __longlong_as_double((long long) w);
+ #elif defined(__INTEL_COMPILER)
+ 	return _castu64_f64(w);
+-#elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64))
++#elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64)) && !defined(__clang__)
+ 	return _CopyDoubleFromInt64((__int64) w);
+ #else
+ 	union {
+@@ -78,7 +78,7 @@ static inline uint64_t fp64_to_bits(double f) {
+ 	return (uint64_t) __double_as_longlong(f);
+ #elif defined(__INTEL_COMPILER)
+ 	return _castf64_u64(f);
+-#elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64))
++#elif defined(_MSC_VER) && (defined(_M_ARM) || defined(_M_ARM64)) && !defined(__clang__)
+ 	return (uint64_t) _CopyInt64FromDouble(f);
+ #else
+ 	union {
+-- 
+2.34.1
+
