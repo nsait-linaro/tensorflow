@@ -190,6 +190,11 @@ build:macos --copt=-DGRPC_BAZEL_BUILD
 # Settings for MacOS on ARM CPUs.
 build:macos_arm64 --cpu=darwin_arm64
 
+build:win_arm64 --cpu=x64_arm64_windows
+build:win_arm64 --compiler=clang-cl
+build:win_arm64 --host_crosstool_top=@bazel_tools//tools/cpp:toolchain
+build:win_arm64 --crosstool_top=@bazel_tools//tools/cpp:toolchain
+
 # iOS configs for each architecture and the fat binary builds.
 build:ios --apple_platform_type=ios
 build:ios --apple_bitcode=embedded --copt=-fembed-bitcode

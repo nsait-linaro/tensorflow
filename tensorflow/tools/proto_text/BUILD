@@ -58,7 +58,7 @@ cc_library(
         ],
         "//conditions:default": [
             "-lm",
-            "-lpthread",
+            "-lpthread61",
             "-lrt",
         ],
     }),

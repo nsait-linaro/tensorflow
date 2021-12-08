@@ -585,9 +585,9 @@ LogicalResult Tf2XlaRewriter::LegalizeOp() {
   InlinedVector<tensorflow::XlaExpression, 4> expressions;
   InlinedVector<tensorflow::Tensor, 4> tensors;
   InlinedVector<tensorflow::TensorValue, 4> inputs;
-  expressions.reserve(op_->getNumOperands());
-  tensors.reserve(op_->getNumOperands());
-  inputs.reserve(op_->getNumOperands());
+  // expressions.reserve(op_->getNumOperands());
+  // tensors.reserve(op_->getNumOperands());
+  // inputs.reserve(op_->getNumOperands());
 
   // Prepare the list of Tensor inputs for the kernel.
   for (auto it : llvm::enumerate(op_->getOperands())) {
@@ -647,7 +647,7 @@ LogicalResult Tf2XlaRewriter::LegalizeOp() {
   // Replace uses of old results using the corresponding value after the
   // lowering.
   llvm::SmallVector<Value, 2> values;
-  values.reserve(op_->getNumResults());
+  // values.reserve(op_->getNumResults());
   for (int i = 0, e = op_->getNumResults(); i < e; i++) {
     tensorflow::Tensor* output = op_context.mutable_output(i);
     const tensorflow::XlaExpression* expr =
@@ -756,13 +756,13 @@ void PopulateLegalizeTfWithTf2XlaPatterns(llvm::StringRef device_type,
                                           OwningRewritePatternList& patterns,
                                           MLIRContext* ctx,
                                           bool prefer_tf2xla) {
-  patterns.insert<Tf2XlaRewritePattern>(ctx, device_type.str(), prefer_tf2xla,
-                                        /*legalize_test_only_ops=*/false);
+  // patterns.insert<Tf2XlaRewritePattern>(ctx, device_type.str(), prefer_tf2xla,
+  //                                       /*legalize_test_only_ops=*/false);
 }
 
 std::unique_ptr<OperationPass<FuncOp>> createLegalizeTfWithTf2XlaPass(
     llvm::StringRef device_type, bool prefer_tf2xla) {
-  return std::make_unique<LegalizeTF>(device_type, prefer_tf2xla);
+  // return std::make_unique<LegalizeTF>(device_type, prefer_tf2xla);
 }
 
 }  // end namespace mhlo

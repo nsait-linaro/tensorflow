@@ -332,7 +332,7 @@ StatusOr<Literal> HloEvaluator::EvaluateWithSubstitutions(
   }
 
   std::vector<HloInstruction*> operands;
-  operands.reserve(owned_operands.size());
+  // operands.reserve(owned_operands.size());
   for (auto& operand : owned_operands) {
     operands.push_back(operand.get());
   }
@@ -1507,7 +1507,7 @@ ShapeUtil::IndexIterationSpace IterationSpaceForOutputBatchIndices(
   int64_t output_rank = output_shape.dimensions_size();
   std::vector<int64_t> index_base(output_rank, 0);
   std::vector<int64_t> index_count;
-  index_count.reserve(output_rank);
+  // index_count.reserve(output_rank);
   for (int64_t i = 0; i < output_rank; i++) {
     bool is_output_batch_dim =
         !absl::c_binary_search(dim_numbers.offset_dims(), i);
@@ -1573,11 +1573,11 @@ class OutputBatchIndexToInputIndex {
       }
     }
 
-    index_vector_index_.resize(start_indices_.shape().dimensions_size());
-    input_index_.resize(input_shape.dimensions_size());
+    // index_vector_index_.resize(start_indices_.shape().dimensions_size());
+    // input_index_.resize(input_shape.dimensions_size());
     int64_t index_vector_size =
         start_indices_.shape().dimensions(dim_numbers_.index_vector_dim());
-    index_vector_.resize(index_vector_size);
+    // index_vector_.resize(index_vector_size);
   }
 
   // Returns the contribution of start_indices to the input index corresponding
@@ -1702,7 +1702,7 @@ class OutputOffsetIndexToInputIndex {
       }
     }
 
-    input_index_.resize(input_shape.dimensions_size());
+    // input_index_.resize(input_shape.dimensions_size());
   }
 
   // Returns the contribution of the window indices to the input index
@@ -1974,7 +1974,7 @@ Status HloEvaluator::HandleCall(HloInstruction* call) {
   auto operands = call->operands();
 
   std::vector<const Literal*> arg_literals;
-  arg_literals.reserve(operands.size());
+  // arg_literals.reserve(operands.size());
   for (auto operand : operands) {
     const Literal& arg_literal = GetEvaluatedLiteralFor(operand);
     arg_literals.push_back(&arg_literal);
@@ -2009,7 +2009,7 @@ Status HloEvaluator::HandleFusion(HloInstruction* fusion) {
 
   auto operands = fusion->operands();
   std::vector<const Literal*> arg_literals;
-  arg_literals.reserve(operands.size());
+  // arg_literals.reserve(operands.size());
   for (auto operand : operands) {
     const Literal& arg_literal = GetEvaluatedLiteralFor(operand);
     arg_literals.push_back(&arg_literal);
@@ -2226,7 +2226,7 @@ Status HloEvaluator::HandleSort(HloInstruction* sort) {
   Shape key_shape = sort->operand(0)->shape();
   auto rank = key_shape.rank();
   std::vector<Literal> result_literals;
-  result_literals.reserve(sort->operand_count());
+  // result_literals.reserve(sort->operand_count());
   for (int64_t i = 0; i < sort->operand_count(); ++i) {
     result_literals.emplace_back(sort->operand(i)->shape());
   }
@@ -2249,7 +2249,7 @@ Status HloEvaluator::HandleSort(HloInstruction* sort) {
         absl::c_for_each(limit_indices, [](int64_t& index) { ++index; });
         limit_indices[sort_dim] = sort_dim_elements;
         std::vector<Literal> literals_to_sort;
-        literals_to_sort.reserve(sort->operand_count());
+        // literals_to_sort.reserve(sort->operand_count());
         for (int64_t i = 0; i < sort->operand_count(); ++i) {
           TF_ASSIGN_OR_RETURN(auto literal_to_sort,
                               GetEvaluatedLiteralFor(sort->operand(i))
@@ -2263,7 +2263,7 @@ Status HloEvaluator::HandleSort(HloInstruction* sort) {
         auto comparator = [sort, &compare_status, &embedded_evaluator,
                            &literals_to_sort](int64_t a, int64_t b) {
           std::vector<Literal> literals;
-          literals.reserve(2 * sort->operand_count());
+          // literals.reserve(2 * sort->operand_count());
           for (int64_t i = 0; i < sort->operand_count(); ++i) {
             auto lhs = ExtractFromIndexPositions(literals_to_sort[i], {a},
                                                  /*extract_as_scalar=*/true);
@@ -2361,9 +2361,9 @@ static StatusOr<bool> PerformReductionStep(
   int num_args = results.size();
 
   absl::InlinedVector<Literal, 1> arg_values;
-  arg_values.reserve(num_args);
+  // arg_values.reserve(num_args);
   absl::InlinedVector<Literal, 1> accumulators;
-  accumulators.reserve(num_args);
+  // accumulators.reserve(num_args);
   for (int64_t i = 0; i < num_args; ++i) {
     arg_values.emplace_back(
         ShapeUtil::MakeShape(input_args[i]->shape().element_type(), {}));
@@ -2580,7 +2580,7 @@ Status HloEvaluator::HandleCustomCall(HloInstruction* custom_call) {
 
   // Evaluate input operands so the handler has access to the operand data.
   std::vector<const Literal*> operands;
-  operands.reserve(custom_call->operand_count());
+  // operands.reserve(custom_call->operand_count());
   for (const HloInstruction* operand : custom_call->operands()) {
     operands.push_back(&GetEvaluatedLiteralFor(operand));
   }

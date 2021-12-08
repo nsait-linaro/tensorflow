@@ -199,9 +199,16 @@ config_setting(
 )
 
 config_setting(
-    name = "windows",
+    name = "windows_x86_64",
     values = {
         "cpu": "x64_windows",
+    },
+)
+
+config_setting(
+    name = "windows_arm64",
+    values = {
+        "cpu": "x64_arm64_windows",
     },
 )
 
@@ -226,7 +233,7 @@ selects.config_setting_group(
         ":darwin",
         ":darwin_x86_64",
         ":freebsd",
-        ":windows",
+        ":windows_x86_64",
     ],
 )
 
@@ -243,6 +250,7 @@ selects.config_setting_group(
         ":ios_arm64",
         ":ios_arm64e",
         ":darwin_arm64",
+        ":windows_arm64",
         ":raspberry_pi_with_neon",
     ] + tflite_extra_arm_config_settings(),
 )
@@ -393,7 +401,8 @@ cc_library(
     compatible_with = get_compatible_with_portable(),
     copts = tflite_copts(),
     linkopts = select({
-        "//tensorflow:windows": [],
+        "//tensorflow:windows_x86_64": [],
+        "//tensorflow:windows_arm64": [],
         "//conditions:default": ["-lm"],
     }),
     deps = [
@@ -836,7 +845,8 @@ cc_library(
     hdrs = ["test_util.h"],
     copts = tflite_copts(),
     linkopts = select({
-        "//tensorflow:windows": [],
+        "//tensorflow:windows_x86_64": [],
+        "//tensorflow:windows_arm64": [],
         "//conditions:default": ["-lm"],
     }),
     deps = [
@@ -1060,7 +1070,8 @@ cc_test(
     name = "log_quantized_test",
     srcs = ["log_quantized_test.cc"],
     linkopts = select({
-        "//tensorflow:windows": [],
+        "//tensorflow:windows_x86_64": [],
+        "//tensorflow:windows_arm64": [],
         "//conditions:default": ["-lm"],
     }),
     deps = [

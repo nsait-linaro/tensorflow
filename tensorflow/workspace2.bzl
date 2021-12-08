@@ -72,7 +72,6 @@ def _initialize_third_party():
     jpeg()
     kissfft()
     libprotobuf_mutator()
-    nasm()
     opencl_headers()
     pasta()
     psimd()

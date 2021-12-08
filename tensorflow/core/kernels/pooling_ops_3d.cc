@@ -794,9 +794,9 @@ class MaxPooling3dGradGradOp : public OpKernel {
                               .HostMemory("orig_input_shape"),             \
                           AvgPooling3dGradOp<D##Device, T>);
 
-#define REGISTER_CPU_KERNELS(T) REGISTER_KERNELS(CPU, T)
-TF_CALL_float(REGISTER_CPU_KERNELS);
-#undef REGISTER_CPU_KERNELS
+// #define REGISTER_CPU_KERNELS(T) REGISTER_KERNELS(CPU, T)
+// TF_CALL_float(REGISTER_CPU_KERNELS);
+// #undef REGISTER_CPU_KERNELS
 
 #if GOOGLE_CUDA || TENSORFLOW_USE_ROCM
 

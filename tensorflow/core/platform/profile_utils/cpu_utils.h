@@ -60,7 +60,8 @@ class CpuUtils {
     return GetCpuUtilsHelperSingletonInstance().GetCurrentClockCycle();
 // ----------------------------------------------------------------
 #elif defined(_WIN32)
-    return __rdtsc();
+    return 0;
+    // return __rdtsc();
 // ----------------------------------------------------------------
 #elif defined(__x86_64__) || defined(__amd64__)
     uint64_t high, low;
